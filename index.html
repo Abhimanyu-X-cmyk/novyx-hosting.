@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOVYX Hosting</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #080b18;
+      color: white;
+    }
+
+    header {
+      padding: 22px;
+      border-bottom: 1px solid #252b40;
+      font-size: 24px;
+      font-weight: bold;
+      color: #00e5ff;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 55px auto;
+      padding: 20px;
+    }
+
+    .panel {
+      background: #11172a;
+      border: 1px solid #252b40;
+      border-radius: 16px;
+      padding: 25px;
+      margin-top: 24px;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+
+    p {
+      color: #b5bfd6;
+      line-height: 1.6;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input {
+      background: #080b18;
+      color: white;
+      border: 1px solid #39435d;
+    }
+
+    button {
+      background: #00e5ff;
+      color: #080b18;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #status {
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+
+<body>
+  <header>NOVYX Hosting</header>
+
+  <main>
+    <h1>Your websites. Your space.</h1>
+    <p>
+      Welcome to NOVYX Hosting — a new way to manage
+      and publish your websites.
+    </p>
+
+    <section class="panel">
+      <h2>New Project</h2>
+      <p>Select an HTML file to preview your website.</p>
+
+      <input type="file" id="website" accept=".html">
+
+      <button onclick="previewWebsite()">
+        Preview Website
+      </button>
+
+      <p id="status">No website selected.</p>
+    </section>
+  </main>
+
+  <script>
+    function previewWebsite() {
+      const file = document.getElementById("website").files[0];
+      const status = document.getElementById("status");
+
+      if (!file) {
+        status.textContent = "Please select an HTML file first.";
+        return;
+      }
+
+      if (!file.name.toLowerCase().endsWith(".html")) {
+        status.textContent = "Please choose an HTML file.";
+        return;
+      }
+
+      const url = URL.createObjectURL(file);
+      const preview = window.open("about:blank", "_blank");
+
+      if (!preview) {
+        URL.revokeObjectURL(url);
+        status.textContent = "Allow pop-ups to open the preview.";
+        return;
+      }
+
+      preview.location.href = url;
+      status.textContent = "Preview opened for: " + file.name;
+    }
+  </script>
+</body>
+</html>
